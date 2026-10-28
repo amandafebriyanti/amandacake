@@ -27,3 +27,6 @@ Amandacake adalah aplikasi web *e-commerce* berbasis **Python Flask** yang diran
 2. *Clone* repositori ini ke komputer lokal:
    ```bash
    git clone [https://github.com/amandafebriyanti/amandacake.git](https://github.com/amandafebriyanti/amandacake.git)
+3. Masuk ke dalam direktori proyek: cd amandacake
+4. Instal library Flask (jika belum ada): pip install flask
+5. Jalankan aplikasi web: python app.py
