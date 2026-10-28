@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pesan - Amandacake 🧁</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #e6f0fa; color: #0b3663; text-align: center; padding: 50px; }
+        h2 { color: #d63384; }
+        .form-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); display: inline-block; text-align: left; border: 2px solid #ffb3d9; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #b3d4f0; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #d63384; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; transition: 0.3s; font-weight: bold; font-size: 16px; }
+        button:hover { background-color: #0b3663; }
+        a { color: #d63384; text-decoration: none; display: block; text-align: center; margin-top: 20px; font-weight: bold; }
+        a:hover { color: #0b3663; }
+    </style>
+</head>
+<body>
+    <h2>Formulir Pemesanan</h2>
+    <div class="form-box">
+        <p>Anda sedang memesan: <strong>{{ kue }}</strong></p>
+        <!-- Saat ini form belum diproses ke database, hanya kembali ke halaman utama -->
+        <form action="/" method="GET">
+            <label>Nama Anda:</label>
+            <input type="text" name="nama" required>
+            
+            <label>Alamat Pengiriman:</label>
+            <textarea name="alamat" rows="3" required></textarea>
+            
+            <label>Ucapan di Atas Kue (Opsional):</label>
+            <input type="text" name="ucapan">
+            
+            <button type="submit">Kirim Pesanan</button>
+        </form>
+    </div>
+    <a href="/">← Kembali ke Katalog</a>
+</body>
+</html>

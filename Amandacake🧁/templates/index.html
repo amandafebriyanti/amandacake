@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Amandacake 🧁</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #e6f0fa; 
+            margin: 0; 
+            padding-bottom: 50px;
+            color: #0b3663; 
+        }
+        /* Navbar Menu di Atas */
+        .navbar {
+            background-color: #ffffff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            color: #d63384;
+            margin: 0;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #0b3663;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #ffb3d9;
+            color: #0b3663;
+        }
+        .logout-btn {
+            background-color: #ff4d4d;
+            color: white !important;
+        }
+        .logout-btn:hover {
+            background-color: #cc0000 !important;
+        }
+
+        /* Konten Utama */
+        .container {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        h1 { color: #d63384; margin-bottom: 5px; }
+        .subtitle { color: #555; font-size: 16px; margin-bottom: 40px; }
+        
+        .kategori-section {
+            margin-top: 50px;
+        }
+        .kategori-title {
+            color: #0b3663; 
+            border-bottom: 3px solid #ffb3d9; 
+            display: inline-block; 
+            padding-bottom: 5px;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .katalog { 
+            display: flex; 
+            justify-content: center; 
+            gap: 25px; 
+            flex-wrap: wrap;
+        }
+        .kartu-kue { 
+            border: 2px solid #ffb3d9; 
+            padding: 15px; 
+            border-radius: 12px; 
+            background-color: #ffffff; 
+            width: 260px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: left;
+            transition: transform 0.2s;
+        }
+        .kartu-kue:hover { transform: translateY(-5px); }
+        .kartu-kue img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .kartu-kue h3 { color: #0b3663; margin: 12px 0 8px 0; font-size: 18px; }
+        .kartu-kue p { font-size: 14px; color: #666; height: 40px; overflow: hidden; margin: 0 0 15px 0; }
+        .harga { color: #d63384; font-weight: bold; font-size: 18px; margin-bottom: 12px; }
+        .tombol-pesan {
+            display: block;
+            text-align: center;
+            background-color: #d63384; 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px; 
+            border-radius: 6px; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .tombol-pesan:hover { background-color: #0b3663; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASI ATAS -->
+   <div class="nav-links">
+            <a href="/dashboard?user={{ user }}">🏠 Semua Menu</a>
+            <a href="/kue-tar?user={{ user }}">🎂 Kue Tar</a>
+            <a href="/kue-kering?user={{ user }}">🍪 Kue Kering</a>
+            <a href="/puding?user={{ user }}">🍮 Puding</a>
+            <a href="/" class="logout-btn">Keluar</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Selamat Datang, {{ user }}! ✨</h1>
+        <p class="subtitle">Pilih kue dan camilan favoritmu di bawah ini.</p>
+
+        <!-- KATEGORI 1: KUE TAR -->
+        <div id="kue-tar" class="kategori-section">
+            <h2 class="kategori-title">🎂 Kue Tar</h2>
+            <div class="katalog">
+                {% for kue in menu.kue_tar %}
+                <div class="kartu-kue">
+                    <img src="{{ url_for('static', filename=kue.gambar) }}" alt="{{ kue.nama }}">
+                    <h3>{{ kue.nama }}</h3>
+                    <p>{{ kue.deskripsi }}</p>
+                    <div class="harga">{{ kue.harga }}</div>
+                    <a class="tombol-pesan" href="/pesan/{{ kue.nama }}">Pesan Sekarang</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- KATEGORI 2: KUE KERING -->
+        <div id="kue-kering" class="kategori-section">
+            <h2 class="kategori-title">🍪 Kue Kering</h2>
+            <div class="katalog">
+                {% for kue in menu.kue_kering %}
+                <div class="kartu-kue">
+                    <img src="{{ url_for('static', filename=kue.gambar) }}" alt="{{ kue.nama }}">
+                    <h3>{{ kue.nama }}</h3>
+                    <p>{{ kue.deskripsi }}</p>
+                    <div class="harga">{{ kue.harga }}</div>
+                    <a class="tombol-pesan" href="/pesan/{{ kue.nama }}">Pesan Sekarang</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- KATEGORI 3: PUDING -->
+        <div id="puding" class="kategori-section">
+            <h2 class="kategori-title">🍮 Puding</h2>
+            <div class="katalog">
+                {% for kue in menu.puding %}
+                <div class="kartu-kue">
+                    <img src="{{ url_for('static', filename=kue.gambar) }}" alt="{{ kue.nama }}">
+                    <h3>{{ kue.nama }}</h3>
+                    <p>{{ kue.deskripsi }}</p>
+                    <div class="harga">{{ kue.harga }}</div>
+                    <a class="tombol-pesan" href="/pesan/{{ kue.nama }}">Pesan Sekarang</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

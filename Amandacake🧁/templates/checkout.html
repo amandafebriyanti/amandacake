@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Amandacake 🧁</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e6f0fa; margin: 0; padding: 20px; color: #0b3663; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 2px solid #ffb3d9; }
+        h1 { color: #d63384; text-align: center; }
+        
+        /* Desain Kotak Rincian Pesanan */
+        .rincian-box { background: #fdf2f8; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #ffb3d9; }
+        .rincian-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #ccc; padding-bottom: 8px; }
+        .total-box { font-size: 18px; font-weight: bold; color: #d63384; text-align: right; margin-top: 15px; }
+        
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #0b3663; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #b3d4f0; border-radius: 6px; box-sizing: border-box; }
+        
+        .btn { display: block; width: 100%; background-color: #d63384; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; transition: 0.3s; }
+        .btn:hover { background-color: #0b3663; }
+        .btn-kembali { display: block; text-align: left; margin-bottom: 20px; color: #0b3663; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/keranjang" class="btn-kembali">← Kembali ke Keranjang</a>
+        <h1>📦 Checkout Pesanan</h1>
+
+        <!-- KOTAK RINCIAN PESANAN -->
+        <div class="rincian-box">
+            <h3 style="margin-top: 0; color: #d63384;">Rincian Pesanan:</h3>
+            {% for item in keranjang %}
+            <div class="rincian-item">
+                <span>{{ item.qty }}x <b>{{ item.nama }}</b></span>
+                <span>{{ item.harga }}</span>
+            </div>
+            {% endfor %}
+            <div class="total-box">Total Pembayaran: {{ total }}</div>
+        </div>
+
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Lengkapi informasi pengiriman untuk menyelesaikan pesanan.</p>
+
+        <form action="/checkout" method="POST">
+            <div class="form-group">
+                <label>Nama Penerima:</label>
+                <input type="text" name="nama" required placeholder="Masukkan nama lengkap">
+            </div>
+            <div class="form-group">
+                <label>Alamat Pengiriman:</label>
+                <textarea name="alamat" rows="3" required placeholder="Masukkan alamat lengkap (Jalan, No. Rumah, Kota)"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Nomor Telepon (WhatsApp):</label>
+                <input type="text" name="telepon" required placeholder="Contoh: 081234567890">
+            </div>
+            <div class="form-group">
+                <label>Metode Pembayaran:</label>
+                <select name="metode">
+                    <option value="Transfer Bank (BCA/Mandiri)">Transfer Bank (BRI)</option>
+                    <option value="QRIS (GoPay / OVO / Dana)">QRIS (GoPay / OVO / Dana)</option>
+                    <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Proses Pesanan Sekarang</button>
+        </form>
+    </div>
+</body>
+</html>

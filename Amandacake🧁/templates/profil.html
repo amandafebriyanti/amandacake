@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - Amandacake 🧁</title>
+    <!-- Import Font dan Icon Modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; margin: 0; padding-bottom: 50px; color: #333; }
+        
+        /* HEADER ALA SHOPEE */
+        .header { background: linear-gradient(-180deg, #d63384, #ff4d94); padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .logo { color: white; font-size: 26px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        .nav-icons a { color: white; text-decoration: none; font-size: 20px; position: relative; transition: 0.2s; font-weight: 500; }
+        .nav-icons a:hover { opacity: 0.8; }
+        .nav-icons .badge { position: absolute; top: -8px; right: -15px; background: white; color: #d63384; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 20px; border: 1px solid #d63384; }
+
+        /* KONTEN PROFIL TATA LETAK SPLIT (KIRI & KANAN) */
+        .profil-container { max-width: 1100px; margin: 30px auto; padding: 0 20px; display: flex; gap: 30px; align-items: flex-start; }
+        
+        /* SIDEBAR MENU KIRI */
+        .sidebar { width: 230px; flex-shrink: 0; }
+        .user-info { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; }
+        .user-avatar { width: 50px; height: 50px; background-color: #ffd1dc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #d63384; font-weight: bold; border: 1px solid #ffb3d9; }
+        .user-name { font-weight: 700; font-size: 15px; color: #222; }
+        .user-edit-text { font-size: 13px; color: #888; text-decoration: none; display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+        
+        .side-menu { list-style: none; padding: 0; margin: 0; }
+        .side-menu li { margin-bottom: 15px; }
+        .side-menu a { text-decoration: none; color: #444; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .side-menu a:hover, .side-menu a.active { color: #d63384; }
+        .side-menu .icon { font-size: 18px; width: 20px; text-align: center; color: #0b3663; }
+        .side-menu a.active .icon { color: #d63384; }
+        
+        /* FORMULIR KANAN */
+        .main-content { flex: 1; background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 30px 40px; min-height: 500px; }
+        .header-title { border-bottom: 1px solid #efefef; padding-bottom: 15px; margin-bottom: 30px; }
+        .header-title h2 { margin: 0 0 8px 0; font-size: 20px; color: #333; }
+        .header-title p { margin: 0; font-size: 14px; color: #757575; }
+
+        /* DESAIN INPUT HORIZONTAL */
+        .form-group { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .form-group label { width: 150px; text-align: right; padding-right: 20px; padding-top: 10px; color: #555; font-size: 14px; font-weight: 500; }
+        .input-wrapper { flex: 1; max-width: 450px; }
+        .input-wrapper input, .input-wrapper textarea { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: 'Roboto', sans-serif; box-sizing: border-box; outline: none; transition: 0.3s; }
+        .input-wrapper input:focus, .input-wrapper textarea:focus { border-color: #d63384; box-shadow: 0 0 0 2px rgba(214,51,132,0.1); }
+        .input-wrapper textarea { resize: vertical; min-height: 90px; }
+        
+        .btn-submit { background-color: #d63384; color: white; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 500; font-size: 14px; cursor: pointer; transition: 0.2s; margin-left: 170px; }
+        .btn-submit:hover { background-color: #b82b70; }
+
+        /* FLASH MSG */
+        .flash-msg { background-color: #d1e7dd; color: #0f5132; padding: 12px 20px; border-radius: 4px; margin-bottom: 25px; font-size: 14px; font-weight: 500; border: 1px solid #badbcc; display: flex; align-items: center; gap: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/dashboard" class="logo"><i class="fa-solid fa-cake-candles"></i> Amandacake</a>
+            <div class="nav-icons">
+                <a href="/dashboard" title="Beranda" style="margin-right: 20px;"><i class="fa-solid fa-house"></i> Beranda</a>
+                <a href="/keranjang" title="Keranjang Belanja">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    {% if cart_count > 0 %}<span class="badge">{{ cart_count }}</span>{% endif %}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA PROFIL -->
+    <div class="profil-container">
+        
+        <!-- SIDEBAR KIRI -->
+        <div class="sidebar">
+            <div class="user-info">
+                <!-- Avatar otomatis mengambil huruf pertama dari username -->
+                <div class="user-avatar">{{ user[0]|upper }}</div>
+                <div>
+                    <div class="user-name">{{ user }}</div>
+                    <!-- Link dengan Pop-up Alert -->
+                    <a href="#" class="user-edit-text" onclick="alert('Fitur Ubah Foto Profil segera hadir! 🚀'); return false;">
+                        <i class="fa-solid fa-pen" style="font-size:10px;"></i> Ubah Profil
+                    </a>
+                </div>
+            </div>
+<ul class="side-menu">
+                <li><a href="/profil" class="active"><i class="icon fa-regular fa-user"></i> Akun Saya</a></li>
+                <li style="margin-left: 32px;"><a href="/profil" style="color:#d63384;">Profil & Alamat</a></li>
+                
+                <!-- INI SUDAH DIPERBARUI -->
+                <li style="margin-left: 32px;"><a href="/ubah-password">Ubah Password</a></li>
+                <li style="margin-top: 20px;"><a href="/pesanan"><i class="icon fa-solid fa-clipboard-list"></i> Pesanan Saya</a></li>
+                
+                <li><a href="/favorit"><i class="icon fa-regular fa-heart"></i> Favorit Saya</a></li>
+                <li style="margin-top: 30px;"><a href="/logout" style="color: #d32f2f;"><i class="icon fa-solid fa-right-from-bracket" style="color: #d32f2f;"></i> Keluar</a></li>
+            </ul>
+        </div>
+
+        <!-- FORMULIR KANAN -->
+        <div class="main-content">
+            <div class="header-title">
+                <h2>Profil Saya</h2>
+                <p>Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-msg"><i class="fa-solid fa-circle-check"></i> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="/profil" method="POST">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper" style="padding-top: 8px; font-weight: 500; font-size: 15px; color: #333;">
+                        {{ user }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="nama_lengkap" value="{{ profil.nama_lengkap }}" placeholder="Masukkan nama lengkap Anda">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" name="email" value="{{ profil.email }}" placeholder="contoh: emailku@domain.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor Telepon</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="telepon" value="{{ profil.telepon }}" placeholder="contoh: 081234567890">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Alamat Pengiriman</label>
+                    <div class="input-wrapper">
+                        <textarea name="alamat" placeholder="Nama Jalan, Gedung, No. Rumah, RT/RW, Kecamatan, Kota, Provinsi, Kode Pos">{{ profil.alamat }}</textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Simpan Perubahan</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

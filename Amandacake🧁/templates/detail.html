@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ produk.nama }} - Amandacake 🧁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; margin: 0; padding-bottom: 50px; color: #333; }
+        
+        /* HEADER */
+        .header { background: linear-gradient(-180deg, #d63384, #ff4d94); padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .logo { color: white; font-size: 26px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        .nav-icons a { color: white; text-decoration: none; font-size: 22px; position: relative; transition: 0.2s; }
+        .nav-icons a:hover { opacity: 0.8; }
+        .nav-icons .badge { position: absolute; top: -8px; right: -10px; background: white; color: #d63384; font-size: 12px; font-weight: bold; padding: 2px 7px; border-radius: 20px; border: 1px solid #d63384; }
+
+        /* KOTAK DETAIL PRODUK */
+        .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .breadcrumb { font-size: 14px; color: #d63384; margin-bottom: 15px; font-weight: 500; }
+        .breadcrumb a { color: #555; text-decoration: none; }
+        .breadcrumb a:hover { color: #d63384; }
+
+        .detail-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; overflow: hidden; padding: 20px; gap: 30px; }
+        
+        /* Gambar Kiri */
+        .gambar-produk { flex: 1; max-width: 400px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; }
+        .gambar-produk img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* Info Kanan */
+        .info-produk { flex: 1; display: flex; flex-direction: column; }
+        .judul-kue { font-size: 24px; margin: 0 0 10px 0; color: #222; }
+        
+        .rating-box { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 14px; color: #555; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .rating-box .stars { color: #d63384; font-weight: bold; border-right: 1px solid #ccc; padding-right: 15px; }
+        .rating-box .stars i { color: #ffce3d; }
+        
+        .harga-box { background-color: #fafafa; padding: 15px 20px; margin-bottom: 25px; border-radius: 4px; }
+        .harga { font-size: 32px; font-weight: 700; color: #d63384; margin: 0; }
+        
+        .deskripsi-box { margin-bottom: 25px; line-height: 1.6; color: #444; font-size: 15px; }
+        
+        /* Bagian Kuantitas dan Tombol */
+        .qty-selector { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-weight: 500; }
+        .input-qty { width: 70px; padding: 8px; text-align: center; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .input-qty:focus { border-color: #d63384; }
+
+        .aksi-btn { display: flex; gap: 15px; margin-top: auto; }
+        .btn { flex: 1; text-align: center; padding: 14px 0; font-size: 16px; font-weight: bold; border-radius: 4px; text-decoration: none; cursor: pointer; transition: 0.2s; }
+        
+        .btn-outline { background: #ffeaef; color: #d63384; border: 1px solid #d63384; }
+        .btn-outline:hover { background: #ffc2d1; }
+        
+        .btn-solid { background: #d63384; color: white; border: none; }
+        .btn-solid:hover { background: #b82b70; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/dashboard" class="logo">
+                <i class="fa-solid fa-cake-candles"></i> Amandacake
+            </a>
+            <div class="nav-icons">
+                <a href="/keranjang" title="Keranjang Belanja">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    {% if cart_count > 0 %}
+                    <span class="badge">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN DETAIL PRODUK -->
+    <div class="main-container">
+        <div class="breadcrumb">
+            <a href="/dashboard">Beranda</a> &nbsp; ❯ &nbsp; {{ produk.nama }}
+        </div>
+
+        <div class="detail-card">
+            <!-- Foto Besar -->
+            <div class="gambar-produk">
+                <img src="{{ url_for('static', filename=produk.gambar) }}" alt="{{ produk.nama }}">
+            </div>
+
+            <!-- Informasi Lengkap -->
+            <div class="info-produk">
+                <h1 class="judul-kue">{{ produk.nama }}</h1>
+                
+                <div class="rating-box">
+                    <div class="stars">
+                        {{ produk.rating }} <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div><b>{{ produk.terjual }}</b> Penilaian</div>
+                    <div><b>{{ produk.terjual }}</b> Terjual</div>
+                </div>
+
+                <div class="harga-box">
+                    <h2 class="harga">{{ produk.harga }}</h2>
+                </div>
+
+                <div class="deskripsi-box">
+                    <b style="color: #666; display: block; margin-bottom: 5px;">Deskripsi Produk:</b>
+                    {{ produk.deskripsi }} Kue spesial yang dibuat dari bahan premium pilihan, dijamin lembut dan memanjakan lidah di setiap gigitan. Cocok untuk menemani momen spesialmu!
+                </div>
+
+                <!-- Form untuk Memilih Jumlah (Qty) dan Membeli -->
+                <form action="/tambah-custom/{{ produk.nama }}" method="POST">
+                    <div class="qty-selector">
+                        <label>Kuantitas:</label>
+                        <input type="number" name="qty" value="1" min="1" max="99" class="input-qty">
+                    </div>
+
+                    <div class="aksi-btn">
+                        <button type="submit" name="action" value="keranjang" class="btn btn-outline">
+                            <i class="fa-solid fa-cart-plus"></i> Masukkan Keranjang
+                        </button>
+                        <button type="submit" name="action" value="beli" class="btn btn-solid">
+                            Beli Sekarang
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

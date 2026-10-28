@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang Belanja - Amandacake 🧁</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e6f0fa; margin: 0; padding: 20px; color: #0b3663; text-align: center; }
+        .navbar { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; border-radius: 10px; }
+        .navbar a { text-decoration: none; color: #0b3663; font-weight: bold; padding: 8px 15px; border-radius: 20px; }
+        .container { max-width: 650px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 2px solid #ffb3d9; }
+        h1 { color: #d63384; }
+        .item-list { text-align: left; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .qty-box { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background-color: #ffb3d9; color: #0b3663; text-decoration: none; font-weight: bold; padding: 4px 10px; border-radius: 4px; border: 1px solid #d63384; }
+        .qty-btn:hover { background-color: #d63384; color: white; }
+        .hapus-btn { background-color: #ff4d4d; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; font-size: 13px; font-weight: bold; margin-left: 10px; }
+        .hapus-btn:hover { background-color: #cc0000; }
+        
+        .total { font-size: 20px; font-weight: bold; color: #d63384; margin: 25px 0; border-top: 2px dashed #ffb3d9; padding-top: 15px; }
+        .btn { display: inline-block; background-color: #d63384; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; }
+        .btn:hover { background-color: #0b3663; }
+        
+        .flash-msg { background-color: #d1e7dd; color: #0f5132; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Amandacake 🧁</h2>
+        <a href="/dashboard">← Kembali ke Katalog</a>
+    </div>
+
+    <div class="container">
+        <h1>🛒 Keranjang Belanja Anda</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-msg">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if keranjang %}
+            {% for item in keranjang %}
+            <div class="item-list">
+                <div style="flex: 2;">
+                    <b>{{ item.nama }}</b><br>
+                    <span style="color: #666; font-size: 14px;">{{ item.harga }}</span>
+                </div>
+                
+                <div class="qty-box" style="flex: 1; justify-content: center;">
+                    <a href="/kurang-qty/{{ item.nama }}" class="qty-btn">-</a>
+                    <span style="font-weight: bold; font-size: 18px;">{{ item.qty }}</span>
+                    <a href="/tambah-keranjang/{{ item.nama }}" class="qty-btn">+</a>
+                </div>
+
+                <div style="flex: 1; text-align: right;">
+                    <a href="/hapus-keranjang/{{ item.nama }}" class="hapus-btn">🗑 Hapus</a>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="total">Total Pembayaran: {{ total }}</div>
+            
+            <div style="display: flex; gap: 10px;">
+                <a href="/dashboard" class="btn" style="background-color: #0b3663; flex: 1; text-align: center;">Belanja Lagi</a>
+                <a href="/checkout" class="btn" style="flex: 1; text-align: center;">Checkout Sekarang ➔</a>
+            </div>
+        {% else %}
+            <p style="color: #666; margin: 30px 0;">Keranjang belanjaanmu masih kosong 😢</p>
+            <a href="/dashboard" class="btn">Mulai Belanja</a>
+        {% endif %}
+    </div>
+</body>
+</html>

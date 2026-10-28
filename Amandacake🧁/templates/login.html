@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Amandacake 🧁</title>
+    <!-- Import Font Modern dari Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            /* Background gradien yang manis */
+            background: linear-gradient(135deg, #fdf2f8 0%, #e6f0fa 100%); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0; 
+        }
+        .login-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 40px 45px; 
+            border-radius: 24px; 
+            /* Bayangan yang sangat lembut tapi elegan */
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.15); 
+            width: 330px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .ikon-kue {
+            font-size: 50px;
+            margin-bottom: -10px;
+            display: block;
+        }
+        h2 { 
+            color: #d63384; 
+            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 5px; 
+        }
+        p { 
+            color: #6b7280; 
+            font-size: 14px; 
+            margin-bottom: 25px; 
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: #0b3663;
+            font-weight: 600;
+            margin-bottom: 5px;
+            margin-left: 5px;
+        }
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid #e5e7eb; 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background-color: #f9fafb;
+            transition: all 0.3s ease;
+        }
+        /* Efek saat kolom diklik/diketik */
+        input:focus {
+            outline: none;
+            border-color: #ffb3d9;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 179, 217, 0.2);
+        }
+        button { 
+            /* Tombol gradien */
+            background: linear-gradient(45deg, #d63384, #ff4d94); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            width: 100%; 
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+        }
+        /* Efek melayang saat tombol disentuh */
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(214, 51, 132, 0.4);
+        }
+        .error { 
+            background-color: #fee2e2;
+            color: #ef4444; 
+            font-size: 13px; 
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            font-size: 13px; 
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .register-link { 
+            margin-top: 25px; 
+            font-size: 14px; 
+            display: block; 
+            color: #6b7280; 
+            text-decoration: none; 
+        }
+        .register-link a { 
+            color: #d63384; 
+            font-weight: 700; 
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .register-link a:hover {
+            color: #0b3663;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <span class="ikon-kue">🧁</span>
+        <h2>Amandacake</h2>
+        <p>Selamat datang kembali! Silakan masuk.</p>
+        
+        <!-- Menangkap pesan sukses dari registrasi -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                        <div class="success">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form action="/" method="POST">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit">Masuk ke Toko</button>
+        </form>
+
+        <div class="register-link">
+            Belum punya akun? <a href="/register">Daftar sekarang</a>
+        </div>
+    </div>
+</body>
+</html>

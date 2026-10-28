@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan Berhasil - Amandacake 🧁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
+        
+        .success-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; max-width: 500px; width: 90%; border-top: 5px solid #d63384; }
+        .icon-check { font-size: 60px; color: #0f5132; margin-bottom: 15px; }
+        
+        h1 { color: #222; font-size: 24px; margin-bottom: 5px; }
+        .subtitle { color: #666; margin-bottom: 25px; line-height: 1.5; font-size: 15px; }
+        
+        /* KOTAK INSTRUKSI PEMBAYARAN */
+        .payment-box { background-color: #fdf2f8; border: 1px dashed #d63384; padding: 25px; border-radius: 8px; margin-bottom: 30px; text-align: left; }
+        .payment-box h3 { color: #d63384; margin-top: 0; margin-bottom: 15px; font-size: 18px; text-align: center; }
+        .total-pay { font-size: 28px; font-weight: 700; color: #333; text-align: center; margin-bottom: 20px; }
+        
+        /* Desain Khusus Transfer Bank */
+        .bank-info { background: white; padding: 15px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ffb3d9; }
+        .bank-name { font-weight: bold; color: #0b3663; font-size: 16px; }
+        .bank-acc { font-size: 18px; font-family: monospace; font-weight: bold; letter-spacing: 1px; color: #d63384; }
+        
+        /* Desain Khusus QRIS */
+        .qris-container { text-align: center; background: white; padding: 20px; border-radius: 6px; border: 1px solid #ffb3d9; }
+        .qris-icon { font-size: 120px; color: #333; margin: 10px 0; }
+        
+        .action-btns { display: flex; gap: 15px; justify-content: center; }
+        .btn { padding: 12px 25px; border-radius: 4px; text-decoration: none; font-weight: 500; font-size: 15px; transition: 0.2s; flex: 1; text-align: center; }
+        .btn-main { background: #d63384; color: white; border: 1px solid #d63384; }
+        .btn-main:hover { background: #b82b70; }
+        .btn-outline { background: white; color: #d63384; border: 1px solid #d63384; }
+        .btn-outline:hover { background: #fdf2f8; }
+    </style>
+</head>
+<body>
+
+    <div class="success-card">
+        <i class="fa-solid fa-circle-check icon-check"></i>
+        <h1>Pesanan Berhasil Dibuat!</h1>
+        <p class="subtitle">Terima kasih <b>{{ nama }}</b>, pesanan Anda akan segera kami proses dan kirimkan ke: <br><i>{{ alamat }}</i></p>
+        
+        <div class="payment-box">
+            
+            <!-- JIKA METODE PEMBAYARAN ADALAH TRANSFER BANK -->
+            {% if 'Transfer' in metode %}
+                <h3>Instruksi Transfer Bank</h3>
+                <div class="total-pay">{{ total }}</div>
+                <p style="text-align: center; margin-bottom: 20px; font-size: 14px; color: #555;">Silakan transfer nominal di atas ke salah satu rekening berikut:</p>
+                
+                <div class="bank-info">
+                    <div>
+                        <div class="bank-name">BRI</div>
+                        <div style="font-size: 12px; color: #888;">a.n. Amandacake Official</div>
+                    </div>
+                    <div class="bank-acc">4910 0102 9315 538</div>
+                </div>
+                
+
+            <!-- JIKA METODE PEMBAYARAN ADALAH QRIS -->
+            {% elif 'QRIS' in metode %}
+                <h3>Scan QRIS untuk Membayar</h3>
+                <div class="total-pay">{{ total }}</div>
+                <div class="qris-container">
+                    <i class="fa-solid fa-qrcode qris-icon"></i>
+                    <p style="margin: 0; font-size: 14px; font-weight: 500; color: #333;">QRIS Amandacake 🧁</p>
+                    <p style="margin: 5px 0 0; font-size: 12px; color: #777;">Mendukung GoPay, OVO, DANA & M-Banking</p>
+                </div>
+
+            <!-- JIKA METODE PEMBAYARAN ADALAH COD -->
+            {% else %}
+                <h3>Bayar di Tempat (COD)</h3>
+                <div class="total-pay">{{ total }}</div>
+                <p style="text-align: center; color: #444; line-height: 1.6;">Mohon siapkan uang tunai pas sesuai nominal di atas dan serahkan kepada kurir kami saat kue pesanan Anda tiba di tujuan.</p>
+            {% endif %}
+            
+        </div>
+
+        <div class="action-btns">
+            <a href="/pesanan" class="btn btn-main">Cek Status Pesanan</a>
+            <a href="/dashboard" class="btn btn-outline">Beli Kue Lagi</a>
+        </div>
+    </div>
+
+</body>
+</html>

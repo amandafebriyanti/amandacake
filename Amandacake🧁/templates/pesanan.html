@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pesanan Saya - Amandacake 🧁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; margin: 0; padding-bottom: 50px; color: #333; }
+        .header { background: linear-gradient(-180deg, #d63384, #ff4d94); padding: 15px 0; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px; align-items: center; }
+        .header a { color: white; text-decoration: none; font-weight: bold; font-size: 24px; }
+        
+        .profil-container { max-width: 1100px; margin: 30px auto; display: flex; gap: 30px; padding: 0 20px; }
+        .sidebar { width: 230px; flex-shrink: 0; }
+        .side-menu { list-style: none; padding: 0; margin: 0; }
+        .side-menu li { margin-bottom: 15px; }
+        .side-menu a { text-decoration: none; color: #444; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .side-menu a:hover { color: #d63384; }
+        
+        .main-content { flex: 1; min-height: 400px; }
+        
+        .order-card { background: white; padding: 25px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #efefef; }
+        .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; font-size: 14px; color: #757575; }
+        
+        .order-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 15px; align-items: center; }
+        .item-nama { font-weight: 500; color: #333; }
+        .item-qty { color: #757575; font-size: 13px; margin-left: 10px; }
+        .item-harga { color: #555; font-weight: 500;}
+
+        .order-total { text-align: right; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 20px; font-size: 15px; color: #555; }
+        .order-total b { color: #d63384; font-size: 22px; margin-left: 10px; }
+        
+        .empty-state { text-align: center; background: white; padding: 60px 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); color: #999; }
+        .btn-belanja { display: inline-block; margin-top: 20px; background: #d63384; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: 500; transition: 0.2s; }
+        .btn-belanja:hover { background: #b82b70; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/dashboard"><i class="fa-solid fa-cake-candles"></i> Amandacake</a>
+        </div>
+    </header>
+    
+    <div class="profil-container">
+        <!-- Sidebar Menu -->
+        <div class="sidebar">
+            <ul class="side-menu">
+                <li><a href="/profil"><i class="fa-regular fa-user" style="width: 20px; text-align:center;"></i> Akun Saya</a></li>
+                <li style="margin-left: 32px;"><a href="/profil">Profil & Alamat</a></li>
+                <li style="margin-left: 32px;"><a href="/ubah-password">Ubah Password</a></li>
+                <li style="margin-top: 20px;"><a href="/pesanan" style="color:#d63384; font-weight:bold;"><i class="fa-solid fa-clipboard-list" style="width: 20px; text-align:center; color:#d63384;"></i> Pesanan Saya</a></li>
+                <li><a href="/favorit"><i class="fa-regular fa-heart" style="width: 20px; text-align:center;"></i> Favorit Saya</a></li>
+                <li style="margin-top: 30px;"><a href="/logout" style="color: #d32f2f;"><i class="fa-solid fa-right-from-bracket" style="width: 20px; text-align:center; color: #d32f2f;"></i> Keluar</a></li>
+            </ul>
+        </div>
+        
+        <!-- Daftar Pesanan -->
+        <div class="main-content">
+            <h2 style="background: white; padding: 20px 25px; margin-top: 0; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-bottom: 2px solid #d63384; color: #333;">Riwayat Pesanan</h2>
+
+            {% if pesanan %}
+                {% for order in pesanan %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <span><b style="color: #222;">Tanggal:</b> {{ order.tanggal }}</span>
+                        <span style="color: #0f5132; font-weight: bold;"><i class="fa-solid fa-check-circle"></i> BERHASIL ({{ order.metode }})</span>
+                    </div>
+                    
+                    <!-- KODE YANG DIPERBAIKI (order['items']) -->
+                    {% for item in order['items'] %}
+                    <div class="order-item">
+                        <div>
+                            <span class="item-nama">{{ item.nama }}</span>
+                            <span class="item-qty">x{{ item.qty }}</span>
+                        </div>
+                        <div class="item-harga">{{ item.harga }}</div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="order-total">
+                        Total Belanja: <b>{{ order.total }}</b>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="fa-solid fa-box-open" style="font-size: 60px; color: #ddd; margin-bottom: 15px;"></i>
+                    <h3 style="margin: 0 0 10px; color: #555;">Belum ada pesanan</h3>
+                    <p style="margin: 0;">Yuk, belanja kue manis untuk menemani harimu!</p>
+                    <a href="/dashboard" class="btn-belanja">Mulai Belanja Sekarang</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Favorit - Amandacake 🧁</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #e6f0fa; margin: 0; padding: 20px; color: #0b3663; text-align: center; }
+        .navbar { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; border-radius: 10px; }
+        .navbar a { text-decoration: none; color: #0b3663; font-weight: bold; padding: 8px 15px; border-radius: 20px; }
+        .katalog { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+        .kartu-kue { border: 2px solid #ffb3d9; padding: 15px; border-radius: 12px; background-color: #ffffff; width: 260px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: left; }
+        .kartu-kue img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
+        h1 { color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Amandacake 🧁</h2>
+        <a href="/dashboard?user={{ user }}">← Kembali ke Katalog</a>
+    </div>
+
+    <h1>❤️ Menu Favorit Anda</h1>
+    {% if favorit %}
+    <div class="katalog" style="margin-top: 30px;">
+        {% for item in favorit %}
+        <div class="kartu-kue">
+            <img src="{{ url_for('static', filename=item.gambar) }}" alt="{{ item.nama }}">
+            <h3>{{ item.nama }}</h3>
+            <p style="color: #666; font-size: 14px;">{{ item.deskripsi }}</p>
+            <div style="color: #d63384; font-weight: bold; font-size: 18px; margin-bottom: 10px;">{{ item.harga }}</div>
+            <a href="/tambah-keranjang/{{ item.nama }}?user={{ user }}" style="display: block; text-align: center; background: #d63384; color: white; padding: 8px; border-radius: 5px; text-decoration: none; font-weight: bold;">+ Masukkan Keranjang</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: #666; margin-top: 40px;">Belum ada kue yang ditambahkan ke favorit ❤️</p>
+    {% endif %}
+</body>
+</html>
